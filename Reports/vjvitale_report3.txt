@@ -1,0 +1,74 @@
+How to Run:
+
+	- using Python 2.7 please run "TCPServer.py"
+	- open a page to localhost:8080/ (please use FireFox, because that is the
+	only browser I have to test on, so I cannot garuntee the functionallity for
+	others)
+
+Testing:
+
+	Note: the terminal will print out all requests it recieves and sends
+
+	Objective 1:
+		
+		To see the HTML files go to: 
+			- localhost:8080/
+			- localhost:8080/EggsRecipes
+
+		If you would like to see the JavaScript and CSS files they are at:
+			- localhost:8080/buttons.js
+			- localhost:8080/style.css
+
+			(Though if you see that the button works on the EggsRecipes page 
+			and that both pages have styling to them you can also confirm this
+			and as always you can see the requests in the terminal output)
+
+			https://cse.buffalo.edu/~vjvitale/EggsIntro.html will show the html
+			from the first project if you wish to compare
+
+	Objective 2:
+
+		To see the image navigate to localhost:8080/EggsRecipes and you can
+		veiw a beautiful MS Paint representation of rolled eggs while you learn
+		to make them. Though, if you do not wish to learn this amazing knowlege
+		you can also veiw by going to localhost:8080/eggie.png
+
+	Objective 3:
+
+		The cookie is set when you first visit the home page (localhost:8080/)
+		or the recipes page (localhost:8080/EggsRecipes). Above the page tittle
+		there should be another title: "Welcome to the Egg Zone New Commer!", 
+		which will go away once the cookie has been set and the page is
+		reloaded. You can open up as many new tabs as you like and see that the
+		cookie is there. If you open up a new incognito window you can see the
+		cookie magically disapear and be greeted again. 
+
+	Objective 4:
+
+		The querey is located at localhost:8080/query
+		the keys are name and num. You can put any text you want in here, but
+		putting your name for name and a number for num is recommended. After
+		doing this you should be told how many eggs you ate that day ^_^. Also
+		fun secret if you dont put the provided keys, as long as you have the ?
+		it will tell you Hello you ate eggs today! :^).
+
+Archetecture of the Software:
+
+	When the server recieves a request, it puts all of the headers into a 
+	dictionary then it begins processing the path of the request. Depeding on
+	which path is given it will server up different information. This is done
+	through a long train of elif statements that I deeply regret, but not as
+	much as how I handle requests. Each differnt type of request has its own 
+	function, which sounds cool and organized until you releasise that all of
+	the headers are essentailly copied and pasted code in each function. This
+	descion is dumb and ill advised, but will not be fixed until later. For the
+	html, js, and css functions the html, js, or css file is read into a string
+	and put into the body. The same thing happens for the image. For the cookie
+	the file parses through the headers to see if the cookie has been set when
+	the user goes to either the homepage or the recipe page. If it has not been
+	set then a different html page is served up for both. For the querey, the
+	server is looking for a string that starts with "/query" and then splits
+	the string first on ?, looks at the second part and splits on &, then goes
+	through each value, splits on = and searchs for the keys num and name. When
+	these are found, their respective values are saved in variables num and
+	name which are used to give the plain text output.

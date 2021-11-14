@@ -1,0 +1,57 @@
+How to Run:
+	There are 2 ways to do this:
+	1) go to https://cse.buffalo.edu/~vjvitale/EggsIntro.html
+	2) Go into the zip folder and open the EggsIntro.html in your prefered browser
+	(techically you do EggRecipecs.html as well, but EggsIntro is the intended 
+	homepage)
+
+	Testing the software can be done from either method and is performed the
+	same way. Testing software assumes u have first ran it.
+
+How to test Software (this assumes you started from EggsIntro):
+	1) Read over the introduction to learn a brief history of eggs. If you
+	would like to learn more or see where the information came from feel free
+	to click on the links in references, but they provide nothing other citations.
+	Also they are an unordered list.
+	2) Click on "For Fun Egg Recipes Click here!", this is the linking of the
+	HTML files. You can return to the orginal from the second by clicking on
+	"For Fun Egg Facts Click here!"
+	3) Learn how to make rolled eggs. The Indregients are listed in a table and
+	the steps are an ordered list.
+	4) Once you have absorbed that there is a button  labled "See another 
+	recipe!" that uses JavaScript to alter the style such that a new recipe 
+	will apear! You can press this as many times as you desire to swtich 
+	between recipes.
+	5) CSS was used to alter the size of the text so that the page titles are
+	50px, the subtitles are 32px, the rest of the text (save for the references
+	which are 12px) are 16px. The tables are set to have a border. Title and
+	subtitle text is a yellow and the other text is a brown color. You can
+	verify this by staring at the webpage and admiring its beauty.
+
+Architecture of Software:
+	This project consists of 2 HTML files that have a link at the bottom of
+	each that connects one to the other. This meets the first part of the first
+	objective. A list is used give a user a set of links to webpages used to 
+	get information about the history of eggs. Each bullet point is a different
+	link. A table is used to keep track of ingredients for egg recipes. One
+	column has the amount and the other lists the ingredient. This completes 
+	the requirement for a list and a table. Both of these HTML files load in a 
+	CSS Style sheet that alters the color, size, and visability of various
+	elements. The CSS uses classes for the size and color of any paragraph
+	element, whereas the table and link, and list information was just set for
+	all instances. This choice was made since paragraphs were used both for 
+	titles as well as body text so multiple styles were needed, but the tables,
+	links, and lists had one uniform style so classes made little sense. This
+	completes the requirements for objective 2. On the recipe page, there are
+	two divisions, to hold both recipes. The CSS is used to hide the Eggs in a
+	Basket Recipe when the user first enters the page. There is a JavaScript
+	button that changes the display variable of the style element of each of
+	these divisons when pressed. The button will check if the Rolled Egg Recipe
+	is visable, and if so it will make it invisable and bring up the Egg in a
+	Basket Recipe. Otherwise it will do the oposite. This script is loaded into
+	the head of the Recpices page and the funciton described earlier is called
+	when the button is clicked. This completes objective 3. The webpage is
+	available for veiwing at https://cse.buffalo.edu/~vjvitale/EggsIntro.html.
+	This was done through following the tutorial provided for hosting websites
+	through the CSE server. FileZilla was used to upload files to timberlake.
+

@@ -1,0 +1,73 @@
+How To Run:
+	
+	using python 2.7 run TCPServer.py
+	--I only have FireFox so please use that browser
+	localhost:8080 is where all paths originate from
+
+How To Test:
+
+
+	Objective 1:
+		This is located at the path localhost:8080/egg_form
+		Pleaser Enter your name into the first field and a number into the
+		second. Then press submit. This will take you to localhost:808/vitcors
+		This loads a text file that has all of the other entries that others
+		have written. 
+
+	Objective 2:
+		This is located at localhost:8080/image. Please upload a png file then
+		press submit. This will then take you to the path that the image is
+		hosted at. You will not be able to see the image though because I could
+		not figure that out.
+
+	Objective 3:
+		Again, images are not visable because there is a flaw in uploading them
+		but you can go to the paths and see that they are not properly
+		dsiplayed! all image paths have the naming convention of:
+
+			localhost:8080/images/<filename>
+
+		The files are namges as image<count of what number upload it was>.png
+
+		For example, your first image you upload is:
+
+			localhost:8080/images/image0.png
+
+		(Also I hope you dont mind, but I gave myself a 2 for this part since 
+		the only flaw comes from the fact that my part 2 does not work I am 
+		pretty sure, but if you do not agree with this I understand.)
+
+	Objective 4:
+		Unfourtunately, images are not visable, but you can kind of verify that
+		if I knew how to upload them they would be there because you can see 
+		however many icons as images in the html page that is loaded from a
+		from at: localhost:8080/allImages.
+		Dont actaully test this there is a looping issue
+
+Architecture:
+
+	The server has been updated so its less of a mess, there still is a giant
+	if else block, but what can one do? For objective one, there is a html form
+	that submits a post request to the /egg_form path with is inputs as key-
+	value pairs in the body. The server parses this body and creates a sentance
+	with the pairs. This sentance is then appended to a text file that holds 
+	all the responses. This text file is hosted at /vitcors which is where the
+	user is directed once they submit. For objective two, (and techically 
+	objective 1, but not really since the request is never too long), we first
+	make sure that we get all of our headers by recieiving bytes until we can
+	split our recieved response into two, breaking on two new line characters.
+	Then we parse our headers so we know the content length. After determining
+	this we read in how many more bytes we need to from what is currently in
+	our body. This is then read by bit into a file that follows the naming
+	convention stated above. And that file name is written into a text file. 
+	For objective 3, the serve parses a get request starting with /images and 
+	splits this request on "s/" (this is so I can just take the second half of
+	the request and that will be the file name) It then uses the same method as
+	homework 3 to display the image. Which as for mentioned, due to an error
+	with uploading, means that u just get a message saying the image is not
+	displayable. For part 4 this is done with an html form that has a loop and 
+	an image. The server reads the html file into the body and once it gets to
+	the loop it goes to the next line and begins adding in image paths to an 
+	image tage with a placeholder for the source. It gets the image paths from 
+	a text file contianig every path of every image uploaded. Once its doen it
+	breaks out and adds the rest of the file. JK this does not work. 

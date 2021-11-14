@@ -1,0 +1,83 @@
+How To Run:
+	
+	using python 2.7 run TCPServer.py
+	--I only have FireFox so please use that browser
+	localhost:8080 is where all paths originate from
+
+How to Test:
+	
+	Objective 1:
+
+		(For verifying this part I hightly reccomend either stopping the server
+		after the page loads or commenting out line 17 in the chatting.html
+		This is because the interval will bog down the terminal with its GET
+		requests and make it harder to verify that this part works.)
+
+		Go to localhost:8080/chat , you will see that the page says "welcome
+		Please keep the topic releant to eggs!" If you look on the terminal you
+		can see a GET request sent through and a plaint text response that has
+		this message. To verify that it is an AJAX request you can hit the back
+		arrow and see that it will just take you back to the page you were on
+		before and not to the same page.
+
+	Objective 2:
+
+		On localhost:8080/chat there is a text box where you can enter whatever
+		you want. After pressing send you will see in the terminal a post 
+		request (again you might want to comment out line 17 since it will make
+		many requests) (Note the server only saves the last 20 responses, this
+		was an intentional choice because for a chat log I felt as though
+		having more than that would make the log too large and the user would
+		have to scroll way to far to send new messages.) You can verify that
+		messages are saved on the server by going to localhost:8080/dispMessage
+		(if you do not comment out line 17 in the html it will display this on
+		the main page) (Also I save messages in a global data structure so if 
+		you stop the server they will disapear, I dont see this as a flaw 
+		though because I felt loading a text file every .5 seconds would get 
+		bothersome.)
+
+	Objective 3:
+
+		This objective can actually be verified the same way as objective 2.
+		localhost:8080/dispMessage holds the last 20 user sent messages.
+
+	Objective 4:
+
+		If you commentened at line 17 in the html, it is now time to uncomment
+		it. Open up a second browser window at the localhost:8080/chat. Send a
+		message. Look at the window you did not send the message in exactly .5s
+		later and you will see the message appear like magic! (You can do this
+		from either window and multiple times!) You can try to write html too!
+		It will not work.
+
+Architecture of the Server:
+
+	Objective 1:
+
+		In the html there is a div that calls a script. That script submits an
+		ajax GET request to the server. The server respondes with a plain text
+		response holding html to be added to the server. The said javascript 
+		script then takes that response an inserts it into the div that the
+		script was called in.
+
+	Objective 2:
+
+		When the user presses send, an javascript funciton is called. This 
+		takes the user input replaces all &, <, and > with their html equivlent
+		then converts it to a json string and makes a post request to the 
+		server with that json string. The server then decodes the json string
+		and stores it into a global list that holds the last 20 messages. 
+
+
+	Objective 3:
+
+		This path will take all of the messages the user sent and are stored in
+		the global list mentioned previously. Put each into its own html 
+		paragraph with a line break after and serve up the content.
+
+	Objective 4:
+
+		There is a div in the chatting.html that contains a script which calls
+		a JavaScript funciton every .5s. This function submits an ajax GET 
+		request to the server requesting the path in Objective 3. The function
+		then sets the server's response to the inner html of that div.

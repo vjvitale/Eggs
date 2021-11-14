@@ -1,0 +1,66 @@
+How to run software:
+	Using python 2.7 run TCPServer.py
+
+
+How to test software: 
+	-run server
+	Objective 1:
+		-Open a browser window and go to http://localhost:8080
+		-The browser should display hello world! and the console will print out
+		the request that it recieved.
+	Objective 2:
+		-Open a browser window and go to http://localhost:8080/welcome (or 
+		change the current window to to that address)
+		-The browser should display I like eggs. and the console will print out
+		the request that it recieved.
+	Objective 3:
+		-Open a browser window and go to http://localhost:8080/switch (or 
+		change the current window to to that address)
+		-The browser should redirect to http://localhost:8080/welcome and 
+		display I like eggs. Again, the cosole should print out the request it
+		recieved.
+	Objective 4:
+		-Open a browser window and do not go to:
+			-http://localhost:8080/
+			-http://localhost:8080/welcome
+			-http://localhost:8080/switch
+		-The browser should display Page not found UWU and the console should
+		print out the request it recieved
+
+Architecture of the software:
+	The TCP server is set up using python's SocketServer library. It is set to 
+	listen on port 8080 and uses the serve_forever method so that it will 
+	accept requests until the port is manually closed. The server handles 
+	requests through a custom class that inherits from the BaseRequestHandler 
+	class. All requests are handled through the handle method which has been 
+	over written to parse the headers. When a request is made the handle method
+	begins by setting up the base parts of a response which is asserting the 
+	content type (since all of our responses are plain text we can just save 
+	string with this header), asserting we don't want the browser to change our
+	MIME types, giving us a line break character, and begining the content 
+	length header. All of these are strings that once our request has been 
+	handled, we will put together. (There is also a body string created but it 
+	is empty for now.) After settuping up this information we will now begin 
+	parsing through the received request. We do this by splitting the request 
+	by line then splitting the first line by spaces. We first assert that we 
+	have received a GET request. If we havent we send a 404. After that we 
+	begin parsing the path. If the path is "/" or "/welcome" we will serve 
+	those paths and give a 200 response stating that the request was good. For
+	each of these we create a body string that will have whatever the page will
+	display ("Hello World!" or "I like eggs" for "/" and "/welcome" 
+	respectively.) If the path is "/switch" we create a 301 request to redirect
+	the serever to the "/welcome" path. This is done through creating a 
+	location header and adding that to our base response separated by a new 
+	line break. The 404 request is handled for any other path. This request has
+	the body "Page not found UWU". All responses start with HTTP/1.1 <REQUEST 
+	NUMBER> <MSG ABOUT REQUEST>. They then are concatenaded with the other 
+	nessecarry headers explained earlier (and the redirect request has an extra
+	header.) We also have to find the legnth of our body which is done by 
+	finding the lenght of the string encoded in utf-8 since this is what is 
+	specificed in our content type. We then added 2 new line characters 
+	followed by the body string to our request. After we have formed our 
+	request we will then print out the request we originally recieved to the 
+	console and send our new response to the client. 
+
+	The first line of each request is the only line parsed through since the
+	server only needs to give requests based on the path given. 

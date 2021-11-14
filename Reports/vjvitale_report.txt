@@ -1,0 +1,117 @@
+How To Run:
+	
+	using python 2.7 run TCPServer.py
+	--I only have FireFox so please use that browser
+	https://localhost:8080 is where all paths originate from
+	-- also I use linux, which I realised could effect some of the pathing
+
+How To Test:
+
+	Objective 1:
+
+		go to https://localhost:8080/eggsecrets and register under the resister
+		section. Then open up eggtokens.txt, you will see lines of key-value
+		stores. Find your user name and then the second column will be your 
+		password, which is unrecognizable!
+
+	Objective 2:
+
+		go to https://localhost:8080/eggsecrets and fill out the register form.
+		Underneath a form, you will notice a list of criteria. If you disregrad
+		some of the criteria you will notice that the page tells you what was
+		incorrect and will not create the account. You can then see your user
+		information in the eggwords file.
+
+	Objective 3:
+
+		after registering, go to https://localhost:8080/eggsecrets and fill out
+		the login portion. Assuming you put your information in correctly, you
+		will be redirected and you can see your username with a cool egg fact!
+		If you do it incorrectly you will be redirected to a page that tells 
+		you that your information was not recognized. (Note: this processes 
+		sets a cookie, so for the next part please clear all cookies or do it
+		in an incognito broswer.) Attempt to go to 
+		https://localhost:8080/eggssecretsunleashed with out authenticating 
+		yourself, you will be redirected to the incorrect login page.
+
+	Objective 4:
+
+		after registering and logining in once, close the server. Reopen it and
+		go to https://localhost:8080/eggssecretsunleashed
+
+		you should be redirected to that same fact page! Note you can also see
+		your token be added to eggtokens.txt when you log in.
+
+
+Architecture of the Server:
+
+	
+		Objective 1:
+
+			when the server starts up, whatever information in eggwords.txt is
+			read into a global dictionary where the keys are the usernames and 
+			the values are the salted hashes. This allows for persistence
+			between server reboots. When a user sucessfully registers, the
+			bcrypt library is used to generate a salt then hash the password
+			with said salt. This hash is the added to the dictionary as well as
+			appended to the file with the user's chosen username.
+
+		Objective 2:
+
+			When a user fills out the registration form, an ajax post request 
+			is made to the server. This request sends all of the form data. The
+			server then takes this information and verifys that the password 
+			fits the determined requirments (this is done by checking string
+			length and using various regexes). If a requirement is not met, a
+			dictionary that contains whether or not a corresponding html
+			element should be shown is set to "block" and a boolean is set to
+			true so the server knows not to actually register said user. This
+			dictionary is then sent back as a json blob and the ajax requst will
+			parse through it and set the html element's display to the given
+			value. Assuming, the user did not mess up their registration, then 
+			the password is hashed and salted as described in objective 1 and
+			an json blob is sent saying to display the element for a sucessfull
+			login.
+
+		Objective 3:
+
+			When a user attempts to go to 
+			https://localhost:8080/eggssecretsunleashed, the server checks if
+			a cookie called token has been set and if said cookie contains a
+			valid token. If this has not been doen the user is redirected to 
+			the failed login in page, otherwise whatever username is associated
+			with said token is displayed in the message telling a cool fact. 
+			The failed login page, is essentially the register/login page, but
+			it tells the user that they are not authenticated. (So, basically I
+			am only gonna describe how the login page works and the failed one
+			works the exact same)  The user will input their username and
+			passowrd then submit the form. This makes a post request to the
+			server. The server will first see if the user name exists. If it 
+			does not, they are redirected to the failed login page. If it does,
+			the server then uses the bcrypt libary to compare the password
+			given to that username's hashed value. Once this is done a token is
+			generated and sent as a cookie to be set with the key of "token". 
+			The user is then redirected to the eggsecretsunleashedpage. Token
+			checking is described in the next part.
+
+		Objective 4:
+
+			When a user logs in and a token is generated, the value is salted
+			and hashed then added to a list of valid tokens for said user. This
+			is done through a global dictionary where the keys are the username
+			and the values are list of tokens. This hash is also appended to 
+			the eggtokens.txt file in the form of <username>,<token>. The token
+			is generated through randomly secting 16 values (which can either
+			be a lowercase letter, uppercase letter, or digit) from a string of
+			possiblities and concatoniating each one together. This should give
+			and entropy of about 95 (log2(62^16)). The token itself is sent to
+			the user as a cookie to be set. When the user attempts to go to the
+			eggssecretsunleashed page, the page will check for the token. If
+			the token is present in a cookie, the server will then go through
+			each registered user (btw I am well aware this is not practical for
+			a large scale service, please dont judge) and their valid hashes.
+			It uses the bcrypt libray to determine if the token matches the 
+			hash. If it matches, a plain text response is created with telling
+			the matching user a cool fact. If the token is not set or does not
+			match any user token, then the user is redirected to the failed 
+			login page.

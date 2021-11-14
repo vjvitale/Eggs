@@ -1,0 +1,66 @@
+How To Run:
+	
+	using python 2.7 run TCPServer.py
+	--I only have FireFox so please use that browser
+	https://localhost:8080 is where all paths originate from
+	-- also I use linux, which I realised could effect some of the pathing
+
+How To Test:
+
+	Objective 1:
+		In my files you can see the private key file saved under "private.key"
+		and the public key file saved under "cert.pem"
+
+		You can also veiw the certificate (here are the fire fox instructions):
+			-go to any path that the server provides (https://localhost:8080/)
+			is one. (Tbh I am not gonna list them all here theres a lot, though
+			from that one you can click the "For Fun Eggs Recipes Click Here!"
+			or "Compete to eat the most eggs!" to get to two directly. If you
+			want more they are all mentioned in the handle method of the server.
+			Also if you see anything that was done for HW4 (though, I think I 
+			removed all of that), please don't touch it it did not work then and
+			it certainly does not work now. Okay so like, it won't break the
+			server exactly but some things don't work)
+
+			-click on the lock thingy by the adress then the arrow next to 
+			connection not secure.
+
+			-click more information 
+
+			- you should see that it is verified by Eggs Co and you can veiw
+			the certificate if you would like, where the organization is Eggs
+			Co, the organizational unit is egg and the common name is egg
+
+	Objective 2:
+		Skipped
+
+	Objective 3 & 4:
+
+		Go to https://localhost:8080/ or any path in the server (objective 1 
+		testing explains some of these)
+
+		You can see all of the requests come in on the commandline!
+
+		You will also notice that you cannot go to http://localhost:8080 or any
+		path that starts with http!
+
+
+Architecture of the Server:
+
+	Objective 1:
+
+		open ssl was used to create a key of 4096 bytes and encrpyts with the
+		RSA algorithm. The public and private keys are saved to files in the 
+		folder that the server is in. These files are named earlier.
+
+	Objective 2:
+
+		Skipped
+
+	Objective 3 & 4:
+		The TCP sever is set up as per usual to handle requests. After, that
+		the socket that the tcp server uses was wrapped in an SSL context wich
+		holds the information about the private and public keys. This way all
+		communication with the server is now encrypted so all paths use SSL.
+
+		
