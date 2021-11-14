@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<link rel="stylesheet" type="text/css" href="style.css"/>
+	<script src="buttons.js"></script>
+	<title>Eggs, Chatting with Friends</title>
+</head>
+
+<body>
+	<p class = "tittle">Lets Talk about Eggs!</p>
+
+	<div id= welcome class = "tittle2">
+	</div>
+		<script type="text/javascript">welcomeReq()</script>
+	<div id=msg_log>
+		<script type="text/javascript">setInterval(polling_msg, 500)</script>
+	</div>
+
+		<label for="msg">Show off your egg knowledge!</label>
+		<input type="text" id="msg" name="msg">
+		<button onclick="sendMessage()">Send</button>
+		<br>
+	<a href="/">For Fun Egg Facts Click here!</a>
+	<br>
+	<a href="EggsRecipes">For Fun Egg Recipes Click here!</a>
+	<br>
+	<a href="egg_form">Compete to eat the most eggs!</a>
+</body>

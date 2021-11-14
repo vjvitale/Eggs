@@ -1,0 +1,84 @@
+.tittle{
+	font-size: 50px;
+	color: #FFC333;
+}
+
+.tittle2{
+	font-size: 32px;
+	color: #FFC333;
+}
+
+.bodies{
+	font-size: 16px;
+	
+}
+
+p.smolBoi{
+	font-size: 12px;
+}
+
+ul{
+	font-size: 12px;
+}
+
+p{
+	color: #503A06;
+}
+
+label{
+	color: #503A06;
+}
+
+a{
+	color: #503A06;
+}
+
+table, th, td{
+	border: 1px solid black;
+	color: #503A06;
+}
+
+ol{
+	color: #503A06;
+}
+
+th, td{
+	padding: 7px;
+}
+
+#EggyInBasket{
+	display: none;
+}
+
+button{
+	color: #503A06;
+}
+
+#usercompliance{
+	display: none;
+	color: #f55d42;
+}
+
+#passLen{
+	display: none;
+	color: #f55d42;
+}
+
+#passcaps{
+	display: none;
+	color: #f55d42;
+}
+
+#passnum{
+	display: none;
+	color: #f55d42;
+}
+
+#succesreg{
+	display: none;
+	color: #169453;
+}
+
+#loginfailed{
+	color: #f55d42;
+}
